@@ -26,8 +26,21 @@ export default class Storage {
                 Object.assign(new Task(), task)
             ))
         );
-
         return todoList;
     }
+
+    static addProject(project) {
+        const todoList = Storage.getTodoList();
+        todoList.addProject(project);
+        Storage.setTodoList(todoList);
+    }
+
+    static addTask(projectName, task) {
+        const todoList= Storage.getTodoList();
+        todoList.getProject(projectName).addTask(task);
+        Storage.setTodoList(todoList);
+    }
+
+
 
 }

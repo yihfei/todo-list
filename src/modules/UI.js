@@ -20,9 +20,11 @@ export default class UI {
         // add task card into content
         const content = document.querySelector('.content');
         const taskCard = this.createTaskCard(project, task);
-
         content.appendChild(taskCard);
+    }
 
+    static loadSidemenu() {
+        const projects = Storage
     }
 
     static createTaskCard(project, task) {
@@ -61,8 +63,7 @@ export default class UI {
         return taskCard;
     }
 
-    static createTaskForm() {
-        
+    static createTaskForm() { 
         const content = document.querySelector('.content');
         // create a form
         const popupForm = document.createElement('div');
@@ -96,7 +97,6 @@ export default class UI {
             input.name = field.id;
             input.required = true;
             form.appendChild(input);
-
             form.appendChild(document.createElement('br'));
         });
 
@@ -141,10 +141,8 @@ export default class UI {
             const priority = document.getElementById('priority').value;
             const projectName = document.getElementById('project').value;
 
-            const project = todoList.getProject(projectName);
             const newTask = new Task(title, desc, date, priority);
-            console.log(project);
-            project.addTask(newTask);
+            Storage.addTask(projectName, newTask);            
             //placeholder
             UI.loadTask(project, newTask);
         });
@@ -152,4 +150,5 @@ export default class UI {
         content.appendChild(popupForm);
 
     }
+
 }
