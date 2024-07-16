@@ -11,8 +11,11 @@ const lis = new TodoList();
 
 proj.addTask(myTask);
 lis.addProject(proj);
+lis.addProject(new Project("two"));
 console.log(lis);
 Storage.setTodoList(lis);
-UI.loadTodoList();
+console.log(Storage.getTodoList());
+UI.createTaskForm();
 
+console.log(lis.getProject("two"))
 

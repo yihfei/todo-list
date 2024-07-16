@@ -46,4 +46,99 @@ export default class UI {
         content.appendChild(taskCard);
 
     }
+
+    static createTaskForm() {
+        
+        const content = document.querySelector('.content');
+        // create a form
+        const popupForm = document.createElement('div');
+        popupForm.id ='popupForm';
+
+        const formTitle = document.createElement('h3');
+        formTitle.textContent = 'Add a new Task';
+        popupForm.appendChild(formTitle);
+
+        const form = document.createElement('form');
+        form.id = 'taskForm';
+
+        const todoList = Storage.getTodoList();
+
+        
+
+
+        const fields = [
+            { label: 'Title', type: 'text', id: 'title' },
+            { label: 'Description', type: 'text', id: 'desc' },
+            { label: 'Date', type: 'date', id: 'date' },
+            { label: 'Priority', type: 'text', id: 'priority' }
+        ];
+
+        fields.forEach(field => {
+            const label = document.createElement('label');
+            label.setAttribute('for', field.id);
+            label.textContent = field.label;
+            form.appendChild(label);
+            console.log(label);
+            const input = document.createElement('input');
+            input.type = field.type;
+            input.id = field.id;
+            input.name = field.id;
+            input.required = true;
+            form.appendChild(input);
+
+            form.appendChild(document.createElement('br'));
+        });
+
+        const projectLabel = document.createElement('label');
+        projectLabel.setAttribute('for', 'project');
+        projectLabel.textContent = 'Project:';
+        form.appendChild(projectLabel);
+
+        const projectSelect = document.createElement('select');
+        projectSelect.id = 'project';
+        projectSelect.name = 'project';
+
+            // Assuming you have a Storage object to get projects from
+        const projects = todoList.getProjects();
+        projects.forEach(project => {
+            const option = document.createElement('option');
+            option.value = project.getName();
+            option.textContent = project.getName();
+            projectSelect.appendChild(option);
+        });
+
+        form.appendChild(projectSelect);
+
+        const submitButton = document.createElement('button');
+        submitButton.type = 'submit';
+        submitButton.textContent = 'Add Task';
+        form.appendChild(submitButton);
+
+        const cancelButton = document.createElement('button');
+        cancelButton.type = 'button';
+        cancelButton.textContent = 'Cancel';
+        cancelButton.addEventListener('click', function() {
+        document.getElementById('popupForm').style.display = 'none';
+        });
+        form.appendChild(cancelButton);
+        
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const title = document.getElementById('title').value;
+            const desc = document.getElementById('desc').value;
+            const date = document.getElementById('date').value;
+            const priority = document.getElementById('priority').value;
+            const projectName = document.getElementById('project').value;
+
+            const project = todoList.getProject(projectName);
+            const newTask = new Task(title, desc, date, priority);
+            console.log(project);
+            project.addTask(newTask);
+            //placeholder
+            UI.loadTask(newTask);
+        });
+        popupForm.appendChild(form);
+        content.appendChild(popupForm);
+
+    }
 }
