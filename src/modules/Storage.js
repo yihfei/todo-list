@@ -17,7 +17,6 @@ export default class Storage {
             Object.assign(new Project(), project)
         ));
 
-        // need to set tasks?
         todoList.getProjects()
             .forEach(project => 
             project.setTasks(
@@ -35,6 +34,12 @@ export default class Storage {
         Storage.setTodoList(todoList);
     }
 
+    static deleteProject(project) {
+        const todoList = Storage.getTodoList();
+        todoList.deleteProject(project);
+        Storage.setTodoList(todoList);
+    }
+
     static addTask(projectName, task) {
         const todoList= Storage.getTodoList();
         todoList.getProject(projectName).addTask(task);
@@ -44,7 +49,6 @@ export default class Storage {
     static deleteTask(projectName, task) {
         const todoList= Storage.getTodoList();
         todoList.getProject(projectName).deleteTask(task);
-        console.log(todoList.getProject(projectName));
         Storage.setTodoList(todoList);
     }
 
