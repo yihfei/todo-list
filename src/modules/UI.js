@@ -67,7 +67,7 @@ export default class UI {
         const content = document.querySelector('.content');
         // create a form
         const popupForm = document.createElement('div');
-        popupForm.id ='popupForm';
+        popupForm.class ='popupForm';
 
         const formTitle = document.createElement('h3');
         formTitle.textContent = 'Add a new Task';
@@ -75,8 +75,6 @@ export default class UI {
 
         const form = document.createElement('form');
         form.id = 'taskForm';
-
-        const todoList = Storage.getTodoList();
 
         const fields = [
             { label: 'Title', type: 'text', id: 'title' },
@@ -109,7 +107,7 @@ export default class UI {
         projectSelect.id = 'project';
         projectSelect.name = 'project';
 
-            // Assuming you have a Storage object to get projects from
+        const todoList = Storage.getTodoList();
         const projects = todoList.getProjects();
         projects.forEach(project => {
             const option = document.createElement('option');
@@ -129,7 +127,7 @@ export default class UI {
         cancelButton.type = 'button';
         cancelButton.textContent = 'Cancel';
         cancelButton.addEventListener('click', function() {
-        document.getElementById('popupForm').style.display = 'none';
+        document.querySelector('.popupForm').style.display = 'none';
         });
         form.appendChild(cancelButton);
         
@@ -150,5 +148,68 @@ export default class UI {
         content.appendChild(popupForm);
 
     }
+
+    static createProjectForm() {
+        const content = document.querySelector('.content');
+
+        const popupForm = document.createElement('div');
+        popupForm.class ='popupForm';
+
+        const formTitle = document.createElement('h3');
+        formTitle.textContent = 'Add a new project';
+        popupForm.appendChild(formTitle);
+
+        const form = document.createElement('form');
+        form.id = 'taskForm';
+
+        const fields = [
+            { label: 'Name', type: 'text', id: 'name' },
+        ];
+
+        fields.forEach(field => {
+            const label = document.createElement('label');
+            label.setAttribute('for', field.id);
+            label.textContent = field.label;
+            form.appendChild(label);
+            console.log(label);
+            const input = document.createElement('input');
+            input.type = field.type;
+            input.id = field.id;
+            input.name = field.id;
+            input.required = true;
+            form.appendChild(input);
+            form.appendChild(document.createElement('br'));
+        });
+
+        const submitButton = document.createElement('button');
+        submitButton.type = 'submit';
+        submitButton.textContent = 'Add Project';
+        form.appendChild(submitButton);
+
+        const cancelButton = document.createElement('button');
+        cancelButton.type = 'button';
+        cancelButton.textContent = 'Cancel';
+        cancelButton.addEventListener('click', function() {
+        document.querySelector('.popupForm').style.display = 'none';
+        });
+        form.appendChild(cancelButton);
+        
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+
+            const newProject = new Project(name)
+            Storage.addProject(newProject);            
+            //placeholder
+            UI.loadProject(newProject);
+        });
+        popupForm.appendChild(form);
+        content.appendChild(popupForm);
+    }
+
+    
+    
+
+    
 
 }

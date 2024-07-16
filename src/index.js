@@ -16,9 +16,8 @@ console.log(lis);
 Storage.setTodoList(lis);
 console.log(Storage.getTodoList());
 UI.loadTodoList();
-UI.createTaskForm();
+UI.createProjectForm();
 
-Storage.deleteProject(proj);
 // UI.loadTodoList();
 
 
