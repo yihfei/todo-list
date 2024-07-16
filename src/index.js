@@ -15,7 +15,7 @@ lis.addProject(new Project("two"));
 console.log(lis);
 Storage.setTodoList(lis);
 console.log(Storage.getTodoList());
-UI.createTaskForm();
+UI.loadTodoList();
 
 console.log(lis.getProject("two"))
 

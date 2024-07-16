@@ -13,17 +13,24 @@ export default class UI {
 
     static loadProject(project) {
         project.getTasks()
-            .forEach(task => this.loadTask(task));
+            .forEach(task => this.loadTask(project, task));
     }
 
-    static loadTask(task) {
+    static loadTask(project, task) {
+        // add task card into content
+        const content = document.querySelector('.content');
+        const taskCard = this.createTaskCard(project, task);
+
+        content.appendChild(taskCard);
+
+    }
+
+    static createTaskCard(project, task) {
         const title = task.getTitle();
         const desc = task.getDescription();
         const date = task.getDate();
         const priority = task.getPriority();
 
-        // add task card into content
-        const content = document.querySelector('.content');
         const taskCard = document.createElement('div');
         taskCard.classList.add('task');
         
@@ -43,8 +50,15 @@ export default class UI {
         priorityElement.textContent = priority;
         taskCard.appendChild(priorityElement);
 
-        content.appendChild(taskCard);
+        const deleteBtn = document.createElement('button');
+        deleteBtn.addEventListener('click', () => {
+            taskCard.innerText = '';
+            project.deleteTask(title);
+        } )
+        taskCard.appendChild(deleteBtn);
+        console.log(project);
 
+        return taskCard;
     }
 
     static createTaskForm() {
@@ -62,9 +76,6 @@ export default class UI {
         form.id = 'taskForm';
 
         const todoList = Storage.getTodoList();
-
-        
-
 
         const fields = [
             { label: 'Title', type: 'text', id: 'title' },
@@ -135,7 +146,7 @@ export default class UI {
             console.log(project);
             project.addTask(newTask);
             //placeholder
-            UI.loadTask(newTask);
+            UI.loadTask(project, newTask);
         });
         popupForm.appendChild(form);
         content.appendChild(popupForm);
