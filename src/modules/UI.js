@@ -55,7 +55,7 @@ export default class UI {
         const deleteBtn = document.createElement('button');
         deleteBtn.addEventListener('click', () => {
             taskCard.innerText = '';
-            project.deleteTask(title);
+            Storage.deleteTask(project.getName(), task)
         } )
         taskCard.appendChild(deleteBtn);
         console.log(project);

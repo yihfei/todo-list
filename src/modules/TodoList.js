@@ -7,7 +7,8 @@ export default class TodoList {
         this.projects.push(project);
     }
 
-    deleteProject(projectName) {
+    deleteProject(project) {
+        const projectName = project.getName();
         let index = -1;
         for (let i = 0; i < this.projects.length; i++) {
             if (this.projects[i].getName() == projectName) {
