@@ -60,8 +60,8 @@ export default class UI {
 
         const taskBtn = document.createElement('button');
         const projectBtn = document.createElement('button');
-        taskBtn.textContent = 'add task';
-        projectBtn.textContent = 'add project';
+        taskBtn.textContent = '+';
+        projectBtn.textContent = '+';
         taskBtn.classList.add('add-task-btn');
         projectBtn.classList.add('add-project-btn')
 
@@ -69,8 +69,14 @@ export default class UI {
         projectBtn.addEventListener('click', UI.createProjectForm);
 
         sidemenu.appendChild(taskBtn);
-        sidemenu.appendChild(projectBtn);
 
+        const projectContainer = document.createElement('div');
+        const header = document.createElement('h3');
+        header.textContent = 'projects'
+        projectContainer.classList.add('project-container');
+        projectContainer.append(header);
+        projectContainer.append(projectBtn);
+        sidemenu.append(projectContainer);
 
         const projects = Storage.getTodoList().getProjects();
 
@@ -80,12 +86,38 @@ export default class UI {
             projectBtn.textContent = projectName;
 
             projectBtn.addEventListener('click', () => {
-                UI.clearContent();
-                UI.loadProject(project);
-                console.log('clicked!')
+                UI.selectProject(project)
             })
             sidemenu.appendChild(projectBtn);
         })
+    }
+
+    static selectProject(project) {
+        UI.clearContent();
+        const content = document.querySelector('.content');
+        
+        const projectName = project.getName();
+        const projectTitle = document.createElement('h2');
+        projectTitle.textContent = projectName;
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.addEventListener('click', () => {
+            UI.clearContent();
+            Storage.deleteProject(project);
+            UI.loadSidemenu();
+        });
+        deleteBtn.textContent = 'delete project';
+
+        const headerContainer = document.createElement('div');
+        headerContainer.classList.add('project-header');
+        headerContainer.appendChild(projectTitle);
+        headerContainer.appendChild(deleteBtn);
+
+        content.appendChild(headerContainer);
+
+        const updatedProject = Storage.getTodoList().getProject(projectName);
+        UI.loadProject(updatedProject);
+
     }
 
     static createTaskCard(project, task) {
@@ -152,11 +184,18 @@ export default class UI {
             const priority = document.getElementById('priority').value;
             const projectName = document.getElementById('projectSelect').value;
 
+            document.getElementById('title').value = '';
+            document.getElementById('date').value = '';
+            document.getElementById('priority').value = '';
+            document.getElementById('projectSelect').value= '';
+
             const newTask = new Task(title, date, priority);
             const project = todoList.getProject(projectName);
             Storage.addTask(projectName, newTask);            
             UI.loadSidemenu();
             UI.endForm();
+            UI.selectProject(project);
+
 
 
         }, { once: true });
@@ -177,6 +216,7 @@ export default class UI {
         projectForm.addEventListener('submit', function(event) {
             event.preventDefault();
             const name = document.getElementById('name').value;
+            document.getElementById('name').value = '';
 
             const newProject = new Project(name);
             Storage.addProject(newProject);            

@@ -3,6 +3,14 @@ import Task from './Task'
 import TodoList from './TodoList'
 
 export default class Storage {
+
+    static checkTodoList() {
+        if (localStorage.getItem("todoList") !== null) {
+            return true;
+        } 
+        return false;
+    }
+
     static setTodoList(todoList) {
         localStorage.setItem("todoList", JSON.stringify(todoList));
     }

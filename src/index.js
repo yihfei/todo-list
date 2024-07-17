@@ -5,17 +5,17 @@ import Project from "./modules/Project";
 import Storage from "./modules/Storage";
 import UI from "./modules/Ui";
 
-const myTask = new Task('Example Task', '2024-07-15', 'High');
-const proj = new Project("test");
-const lis = new TodoList();
 
-proj.addTask(myTask);
-lis.addProject(proj);
+if (!Storage.checkTodoList()) {
+    const myTask = new Task('Example Task', '2024-07-15', 'high');
+    const proj = new Project("General");
+    const list = new TodoList();
+    list.addProject(proj);
+    Storage.setTodoList(list);
+}
 
-lis.addProject(new Project("two"));
-Storage.setTodoList(lis);
 UI.loadSidemenu();
 
 
-// console.log(lis.getProject("two"))
+
 

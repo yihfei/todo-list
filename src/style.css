@@ -5,7 +5,7 @@
 body {
     margin: 0;
     display: grid;
-    grid-template-columns: 170px 1fr ;
+    grid-template-columns: 210px 1fr ;
     font-family: Arial, Helvetica, sans-serif;
 
     --highlight: hsl(0, 99%, 39%);
@@ -13,6 +13,16 @@ body {
     --dark-theme: hsl(0, 0%, 92%);
 
     background-color: var(--light-theme);
+    font-family:  "Open Sans", Arial, Helvetica, sans-serif;
+
+}
+
+button {
+    border: none;
+    background-color: white;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 1px 1px 2px 0px hsl(0, 0%, 70%);
 
 }
 
@@ -26,19 +36,51 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 30px;
+    padding: 10px;
 }
 
 .sidemenu button {
-    background-color: var(--dark-theme);
     border: none;
+    transition: transform 0.1s ease-out 0s;
 }
 
-.logo {
-    display: flex;
-    padding: 10px;
-    justify-content: space-evenly;
+button:hover {
+    transform: scale(0.96);
 }
+
+.project-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 10px;
+}
+
+.add-task-btn, .add-project-btn {
+    background-color: white;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    z-index: 2;
+
+}
+
+.add-task-btn {
+    position: fixed;
+    bottom: 5vh;
+    right: 5vh;
+    
+}
+
+.project-header {
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: -15px;
+    padding: 0px 45px;
+    justify-content: space-between;
+    align-items: center;
+}
+
 
 svg {
     height: 50px;
@@ -47,18 +89,24 @@ svg {
 .content {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 20px 40px;
     gap: 20px;
 }
 
 .taskcard {
     display: grid;
     padding: 10px 30px;
-    grid-template-columns: 1fr 90px 40px 60px;
+    grid-template-columns: 1fr 90px 60px 60px;
     align-items: center;
     gap: 10px;
     background-color: var(--dark-theme);
-    border-radius: 10px;
+    border-radius: 30px;
+    transition: transform 0.1s ease-out 0s;
+
+}
+
+.taskcard:hover{
+    transform: scale(1.04);
 }
 
 .taskcard .title {
@@ -93,19 +141,34 @@ svg {
     z-index: 1001;
 }
 
+
 form {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    width: 200px;
+    width: 250px;
 }
 
 form input {
     margin-bottom: 10px;
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+form label {
+    padding-left: 5px;
+}
+
+form select {
+    appearance: none;
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
 }
 
 .button-container {
-    margin-top: 20px;
+    margin-top: 10px;
     display: flex;
     justify-content: space-around;
 
