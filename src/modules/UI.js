@@ -32,6 +32,28 @@ export default class UI {
         content.appendChild(taskCard);
     }
 
+    static startForm() {
+        // make all forms none first
+        const forms = document.querySelectorAll('.popupform');
+        forms.forEach(form => {
+            console.log(form);
+            form.classList.remove('show');
+        })
+        // disable the rest of the screen
+        const overlay = document.querySelector('.overlay');
+        overlay.classList.add('show');
+    }
+
+    static endForm() {
+        const forms = document.querySelectorAll('.popupform');
+        forms.forEach(form => {
+            console.log(form);
+            form.classList.remove('show');
+        });
+        const overlay = document.querySelector('.overlay');
+        overlay.classList.remove('show');
+    }
+
     static loadSidemenu() {
         UI.clearSidemenu();
         const sidemenu = document.querySelector('.sidemenu');
@@ -67,6 +89,7 @@ export default class UI {
     }
 
     static createTaskCard(project, task) {
+
         const title = task.getTitle();
         const date = task.getDate();
         const priority = task.getPriority();
@@ -103,8 +126,10 @@ export default class UI {
     }
 
     static createTaskForm() { 
+        UI.startForm();
+
         const taskForm = document.querySelector('.popupform.task');
-        taskForm.style.display = 'flex';
+        taskForm.classList.add('show');
 
         const todoList = Storage.getTodoList();
         const projects = todoList.getProjects();
@@ -131,20 +156,22 @@ export default class UI {
             const project = todoList.getProject(projectName);
             Storage.addTask(projectName, newTask);            
             UI.loadSidemenu();
-            taskForm.style.display = 'none';
+            UI.endForm();
 
 
         }, { once: true });
 
         const cancelBtn = document.querySelector('#taskForm .cancel');
         cancelBtn.addEventListener('click', function() {
-            taskForm.style.display = 'none';
+            UI.endForm();
         }, { once: true });
     }
 
     static createProjectForm() {
+        UI.startForm();
+
         const projectForm = document.querySelector('.popupform.project');
-        projectForm.style.display = 'flex';
+        projectForm.classList.add('show');
 
         const submitBtn = document.querySelector('#projectForm .submit');
         projectForm.addEventListener('submit', function(event) {
@@ -154,13 +181,13 @@ export default class UI {
             const newProject = new Project(name);
             Storage.addProject(newProject);            
             UI.loadSidemenu();
-            projectForm.style.display = 'none';
+            UI.endForm();
 
         }, { once: true });
 
         const cancelBtn = document.querySelector('#projectForm .cancel');
         cancelBtn.addEventListener('click', function() {
-            projectForm.style.display = 'none';
+            UI.endForm();
         }, { once: true });
     }
 
