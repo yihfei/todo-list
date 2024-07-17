@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<script defer src="main.js"></script></head>
+<body>
+    <div class="overlay"></div>
+
+    <div class="sidemenu">
+       
+    </div>
+    <div class="popupform project">
+        <h3>add a new project</h3>
+        <form id="projectForm">
+            <label for="name">name</label>
+            <input type="text" id="name" name="name" required>
+            <div class="button-container">
+                <button class="submit" type="submit">add project</button>
+                <button class="cancel" type="button">cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="popupform task">
+        <h3>add a new task</h3>
+        <form id="taskForm">
+            <label for="title">title</label>
+            <input type="text" id="title" name="title" required="">
+            <label for="date">due date</label>
+            <input type="date" id="date" name="date" required="">
+            <label for="priority">priority</label>
+            <select id="priority" name="priority" required>
+                <option value="">select priority</option>
+                <option value="high">high</option>
+                <option value="medium">medium</option>
+                <option value="low">low</option>
+            </select>
+            <label for="projecSelect">Project:</label>
+            <select id="projectSelect" name="projectSelect"></select>
+            <div class="button-container">
+                <button class="submit" type="submit">add task</button>
+                <button class="cancel" type="button">cancel</button>
+            </div>
+        </form>
+    </div>
+    <div class="content">
+        
+    </div>
+
+</body>
+</html>
