@@ -68,33 +68,34 @@ export default class UI {
 
     static createTaskCard(project, task) {
         const title = task.getTitle();
-        const desc = task.getDescription();
         const date = task.getDate();
         const priority = task.getPriority();
 
         const taskCard = document.createElement('div');
-        taskCard.classList.add('task');
+        taskCard.classList.add('taskcard');
         
         const titleElement = document.createElement('h3');
+        titleElement.classList.add('title');
         titleElement.textContent = title;
         taskCard.appendChild(titleElement);
 
-        const descElement = document.createElement('p');
-        descElement.textContent = desc;
-        taskCard.appendChild(descElement);
 
         const dateElement = document.createElement('p');
+        dateElement.classList.add('date');
         dateElement.textContent = date;
         taskCard.appendChild(dateElement);
 
         const priorityElement = document.createElement('p');
+        priorityElement.classList.add('priority');
         priorityElement.textContent = priority;
         taskCard.appendChild(priorityElement);
 
         const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'delete';
         deleteBtn.addEventListener('click', () => {
-            taskCard.innerText = '';
+            taskCard.remove();
             Storage.deleteTask(project.getName(), task)
+            UI.loadSidemenu();
         } )
         taskCard.appendChild(deleteBtn);
 
@@ -122,7 +123,6 @@ export default class UI {
         taskForm.addEventListener('submit', function(event) {
             event.preventDefault();
             const title = document.getElementById('title').value;
-            const desc = document.getElementById('desc').value;
             const date = document.getElementById('date').value;
             const priority = document.getElementById('priority').value;
             const projectName = document.getElementById('projectSelect').value;

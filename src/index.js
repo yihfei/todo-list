@@ -5,7 +5,7 @@ import Project from "./modules/Project";
 import Storage from "./modules/Storage";
 import UI from "./modules/Ui";
 
-const myTask = new Task('Example Task', 'This is a description', '2024-07-15', 'High');
+const myTask = new Task('Example Task', '2024-07-15', 'High');
 const proj = new Project("test");
 const lis = new TodoList();
 
