@@ -5,6 +5,11 @@ import Storage from "./Storage";
 
 export default class UI {
 
+    static clearContent() {
+        const content = document.querySelector('.content');
+        content.textContent = '';
+    }
+
     static loadTodoList() {
         const todoList = Storage.getTodoList();
         todoList.getProjects()
@@ -24,7 +29,25 @@ export default class UI {
     }
 
     static loadSidemenu() {
-        const projects = Storage
+        const sidemenu = document.querySelector('.sidemenu');
+        const projects = Storage.getTodoList().getProjects();
+
+        projects.forEach(project => {
+            const projectName = project.getName();
+
+            // create button
+            const projectBtn = document.createElement('button');
+            projectBtn.textContent = projectName;
+
+            // on click, clear content, display only current project
+            projectBtn.addEventListener('click', () => {
+                UI.clearContent();
+                UI.loadProject(project);
+                console.log('clicked!')
+            })
+            sidemenu.appendChild(projectBtn);
+
+        })
     }
 
     static createTaskCard(project, task) {
@@ -206,6 +229,7 @@ export default class UI {
         popupForm.appendChild(form);
         content.appendChild(popupForm);
     }
+
 
     
     

@@ -11,12 +11,10 @@ const lis = new TodoList();
 
 proj.addTask(myTask);
 lis.addProject(proj);
+
 lis.addProject(new Project("two"));
-console.log(lis);
 Storage.setTodoList(lis);
-console.log(Storage.getTodoList());
-UI.loadTodoList();
-UI.createProjectForm();
+UI.loadSidemenu();
 
 // UI.loadTodoList();
 
