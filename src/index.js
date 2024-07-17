@@ -16,8 +16,6 @@ lis.addProject(new Project("two"));
 Storage.setTodoList(lis);
 UI.loadSidemenu();
 
-// UI.loadTodoList();
-
 
 // console.log(lis.getProject("two"))
 
