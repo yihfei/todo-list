@@ -127,7 +127,7 @@ export default class UI {
             const priority = document.getElementById('priority').value;
             const projectName = document.getElementById('projectSelect').value;
 
-            const newTask = new Task(title, desc, date, priority);
+            const newTask = new Task(title, date, priority);
             const project = todoList.getProject(projectName);
             Storage.addTask(projectName, newTask);            
             UI.loadSidemenu();
