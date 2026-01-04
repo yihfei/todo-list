@@ -119,7 +119,16 @@ const renderTodos = () => {
             openEditModal(todo);
         });
 
-        todoFooter.append(dueDateSpan, prioritySpan, editBtn);
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.className = 'delete-btn';
+
+        deleteBtn.addEventListener('click', () => {
+            activeProject.removeTodo(todo.id);
+            renderTodos();
+        });
+
+        todoFooter.append(dueDateSpan, prioritySpan, editBtn, deleteBtn);
 
         todoCard.append(todoMain, todoFooter);
         todoContainer.appendChild(todoCard);
