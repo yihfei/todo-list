@@ -34,6 +34,8 @@ let activeProject = defaultProject;
 
 // Update the Sidebar
 const renderProjects = () => {
+    activeProjectNameUI.textContent = activeProject.name;
+    activeProjectDescUI.textContent = activeProject.description;
     projectListUI.innerHTML = '';
     
     projects.forEach((project) => {
