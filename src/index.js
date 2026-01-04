@@ -2,7 +2,7 @@ import { Todo, Priority } from './modules/Todo';
 import { Project } from './modules/Project';
 import { format } from 'date-fns';
 
-// --- 1. DOM ELEMENTS ---
+let editingTodo = null;
 
 // Display Areas
 const projectListUI = document.getElementById('project-list');
@@ -53,7 +53,21 @@ const renderProjects = () => {
     });
 };
 
+const openEditModal = (todo) => {
+    editingTodo = todo;
+    console.log('Editing Todo:', todo);
+    document.getElementById('title-input').value = todo.title;
+    document.getElementById('desc-input').value = todo.description;
+    document.getElementById('date-input').value = todo.dueDate;
+    document.getElementById('priority-input').value = todo.priority;
+
+    // Change UI text to indicate editing
+    document.getElementById('modal-title').textContent = 'Edit Task';
+    todoModal.classList.remove('hidden');
+};
+
 const renderTodos = () => {
+    console.log('Rendering Todos for Project:', activeProject.name);
     todoContainer.innerHTML = '';
 
     activeProject.todos.forEach((todo) => {
@@ -97,17 +111,22 @@ const renderTodos = () => {
         prioritySpan.className = `priority-badge ${todo.priority.toLowerCase()}`;
         prioritySpan.textContent = todo.priority;
 
-        todoFooter.append(dueDateSpan, prioritySpan);
+        const editBtn = document.createElement('button');
+        editBtn.textContent = 'Edit';
+        editBtn.className = 'edit-btn';
 
-        // 4. Final Assembly
+        editBtn.addEventListener('click', () => {
+            openEditModal(todo);
+        });
+
+        todoFooter.append(dueDateSpan, prioritySpan, editBtn);
+
         todoCard.append(todoMain, todoFooter);
         todoContainer.appendChild(todoCard);
     });
 };
 
 // --- 4. EVENT LISTENERS ---
-
-// Task Modal Listeners
 addTaskBtn.addEventListener('click', () => todoModal.classList.remove('hidden'));
 closeModalBtn.addEventListener('click', () => todoModal.classList.add('hidden'));
 
@@ -118,8 +137,18 @@ todoForm.addEventListener('submit', (e) => {
     const date = document.getElementById('date-input').value;
     const priority = document.getElementById('priority-input').value;
 
-    const newTodo = new Todo(title, desc, date, priority);
-    activeProject.addTodo(newTodo);
+   if (editingTodo) {
+        // CASE A: Update existing Todo
+        editingTodo.title = title;
+        editingTodo.description = desc;
+        editingTodo.dueDate = date;
+        editingTodo.priority = priority;
+        editingTodo = null; // Reset
+    } else {
+        // CASE B: Create new Todo (Your existing logic)
+        const newTodo = new Todo(title, desc, date, priority);
+        activeProject.addTodo(newTodo);
+    }
 
     renderTodos();
     todoForm.reset();
