@@ -7,24 +7,73 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="app-container">
+
+    <div class="app-layout">
         <aside class="sidebar">
-            <h2>Projects</h2>
-            <ul id="projectList">
-                <li class="active">Inbox</li>
-            </ul>
-            <button id="newProjectBtn">+ New Project</button>
+            <div class="sidebar-header">
+                <h2>Projects</h2>
+            </div>
+            <ul id="project-list">
+                </ul>
+            <button id="add-project-btn" class="secondary-btn">+ New Project</button>
         </aside>
 
-        <main class="todo-section">
-            <header>
-                <h1 id="currentProjectName">Inbox</h1>
-                <button id="openModalBtn" class="add-task-btn">+ Add Task</button>
+        <main class="content">
+            <header class="main-header">
+                <div class="project-info">
+                    <h1 id="active-project-name">Inbox</h1>
+                    <p id="active-project-desc">Your default task list</p>
+                </div>
+                <button id="add-task-btn" class="primary-btn">+ Add Task</button>
             </header>
 
-            <div id="todoDisplay">
-            </div>
+            <section id="todo-container">
+                </section>
         </main>
+    </div>
+
+    <div id="todo-modal" class="modal hidden">
+        <div class="modal-content">
+            <form id="todo-form">
+                <h2>New Task</h2>
+                <input type="text" id="title-input" placeholder="Task Title" required>
+                <textarea id="desc-input" placeholder="Description (optional)"></textarea>
+                
+                <div class="input-group">
+                    <label for="date-input">Due Date</label>
+                    <input type="date" id="date-input" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="priority-input">Priority</label>
+                    <select id="priority-input">
+                        <option value="Low">Low</option>
+                        <option value="Medium" selected>Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+
+                <div class="modal-btns">
+                    <button type="button" id="close-modal" class="cancel-btn">Cancel</button>
+                    <button type="submit" class="primary-btn">Save Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="project-modal" class="modal hidden">
+        <div class="modal-content">
+            <form id="project-form">
+                <h2>New Project</h2>
+                <input type="text" id="project-name-input" placeholder="Project Name" required>
+                <textarea id="project-desc-input" placeholder="Project Description (optional)"></textarea>
+                
+                <div class="modal-btns">
+                    <button type="button" id="close-project-modal" class="cancel-btn">Cancel</button>
+                    <button type="submit" class="primary-btn">Create Project</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script src="main.js"></script>
