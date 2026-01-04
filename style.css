@@ -6,8 +6,9 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f9f9f9;
+    /* Use the Apple system font (San Francisco) on macOS, with sane fallbacks */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #eeeeee;
     color: #333;
     line-height: 1.6;
 }
@@ -21,20 +22,25 @@ body {
 /* Sidebar Styling */
 .sidebar {
     width: 280px;
-    background-color: #202020;
-    color: white;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
     padding: 2rem 1rem;
     display: flex;
     flex-direction: column;
 }
 
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
 .sidebar h2 {
-    margin-bottom: 1.5rem;
     padding-left: 0.5rem;
     font-size: 1.2rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #888;
+    color: #000000;
 }
 
 #project-list {
@@ -43,20 +49,20 @@ body {
 }
 
 #project-list li {
-    padding: 12px 15px;
+    padding: 12px 25px;
     cursor: pointer;
-    border-radius: 6px;
+    border-radius: 25px;
     margin-bottom: 5px;
-    transition: background 0.2s;
+    transition: background-color 0.2s ease-out;
 }
 
 #project-list li:hover {
-    background-color: #333;
+    background-color: #979797;
 }
 
 #project-list li.active {
-    background-color: #007bff;
-    color: white;
+    background-color:  #000000;
+    color: #ffd900;
 }
 
 /* Main Content Area */
@@ -198,7 +204,28 @@ input, textarea, select {
     border: 1px solid #ddd;
     border-radius: 6px;
     font-size: 1rem;
+    /* Ensure form controls use the page font and consistent sizing */
+    font-family: inherit;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.4;
+    color: inherit;
 }
+
+/* Normalize placeholder appearance so input and textarea match */
+input::placeholder,
+textarea::placeholder {
+    color: #999;
+    font-style: normal; /* avoid browser-default italics */
+    opacity: 1; /* keep consistent opacity */
+}
+
+/* Vendor fallbacks for older browsers
+::-webkit-input-placeholder { color: #999; font-style: normal; opacity: 1; }
+:-ms-input-placeholder { color: #999; font-style: normal; opacity: 1; }
+::-ms-input-placeholder { color: #999; font-style: normal; opacity: 1; }
+::-moz-placeholder { color: #999; font-style: normal; opacity: 1; }
+:-moz-placeholder { color: #999; font-style: normal; opacity: 1; } */
 
 .modal-btns {
     display: flex;
@@ -219,20 +246,41 @@ button:active {
 }
 
 .primary-btn {
-    background-color: #007bff;
-    color: white;
+    background: #ffd900;
+    color: rgb(0, 0, 0);
     border: none;
     padding: 10px 20px;
     border-radius: 6px;
 }
 
-.secondary-btn {
-    background: transparent;
-    color: #888;
-    border: 1px dashed #555;
+#add-task-btn {
+    background: none;
+    color: #666666;
+    font-weight: 500;
     padding: 10px;
-    border-radius: 6px;
-    margin-top: 1rem;
+}
+
+.secondary-btn {
+    background: #ffd900;
+    color: #ffffff;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    padding: 0; /* remove asymmetric padding that would make it oval */
+    font-size: 1.3rem; /* size for the '+' icon */
+    line-height: 1;
+    /* Smooth transitions for hover animation */
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.secondary-btn:hover {
+    /* Slight lift and scale for a bubbly feel, reduce brightness and add soft shadow */
+    transform: scale(1.3);
+    filter: brightness(1.05);
 }
 
 .cancel-btn {
