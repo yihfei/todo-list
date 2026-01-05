@@ -54,6 +54,12 @@ body {
     border-radius: 25px;
     margin-bottom: 5px;
     transition: background-color 0.2s ease-out;
+    /* Prevent long project names from forcing the sidebar wider.
+       Show an ellipsis in the project list while keeping full names
+       wrapable elsewhere (e.g. the main header). */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #project-list li:hover {
@@ -84,6 +90,9 @@ body {
 #active-project-name {
     font-size: 2rem;
     margin-bottom: 0.2rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .project-info p {

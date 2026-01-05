@@ -159,6 +159,56 @@ const renderTodos = () => {
   });
 };
 
+// --- Project remove button (placed in the main header) ---
+// Create once and append to the main header area if present
+const mainHeader = document.querySelector(".main-header");
+let removeProjectBtn = null;
+if (mainHeader) {
+  removeProjectBtn = document.createElement("button");
+  removeProjectBtn.className = "icon-btn delete-btn";
+  removeProjectBtn.setAttribute("aria-label", "Delete project");
+  removeProjectBtn.title = "Delete project";
+  removeProjectBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+            <line x1="10" y1="11" x2="10" y2="17" />
+            <line x1="14" y1="11" x2="14" y2="17" />
+        </svg>
+    `;
+
+  removeProjectBtn.addEventListener("click", () => {
+    if (projects.length <= 1) {
+      // Don't allow removing the last project
+      alert("You must keep at least one project.");
+      return;
+    }
+
+    const confirmed = confirm(
+      `Delete project "${activeProject.name}" and all its todos? This cannot be undone.`
+    );
+    if (!confirmed) return;
+
+    // Remove active project from list
+    projects = projects.filter((p) => p.id !== activeProject.id);
+
+    // Choose a new active project (first in list)
+    activeProject = projects[0];
+
+    // Update UI
+    renderProjects();
+    renderTodos();
+    if (activeProjectNameUI)
+      activeProjectNameUI.textContent = activeProject.name;
+
+    // Persist change
+    Storage.save(projects, activeProject.id);
+  });
+
+  // Append the button to the header (it will appear on the right due to flex: space-between)
+  mainHeader.appendChild(removeProjectBtn);
+}
+
 // --- 4. EVENT LISTENERS ---
 addTaskBtn.addEventListener("click", () =>
   todoModal.classList.remove("hidden")
