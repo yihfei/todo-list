@@ -1,6 +1,6 @@
 # Todo List (Simple JS)
 
-A small, dependency-light client-side todo app built with plain JavaScript, CSS and HTML. Keeps data in localStorage and uses a tiny Project/Todo model structure in `src/modules`. Part of my personal effort to practice vanilla JS and localstoragel
+A small, dependency-light client-side todo app built with plain JavaScript, CSS and HTML. Keeps data in localStorage and uses a tiny Project/Todo model structure in `src/modules`. Part of my personal effort to practice vanilla JS and localstorage.
 
 ## Features
 
@@ -49,8 +49,4 @@ Note: `dist/main.js` is a build artifact; source edits belong in `src/`.
 ## Data persistence
 
 All projects and todos are serialized (IDs, titles, due dates, priorities, completion) into a single localStorage key (`todo-list:v1`) by `src/modules/Storage.js`. The app attempts to load saved data on start and falls back to a default "Inbox" project when none is present.
-
-## Styling notes
-
-- The app uses the Apple/system font stack and some CSS rules to avoid horizontal overflow. Todo titles wrap naturally; sidebar project names are truncated with an ellipsis.
 
