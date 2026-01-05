@@ -109,23 +109,6 @@ const renderTodos = () => {
     const h3 = document.createElement("h3");
     h3.textContent = todo.title; // SAFE: User input cannot execute
 
-    // Assemble Text and Main (no description)
-    todoText.append(h3);
-    todoMain.append(checkbox, todoText);
-
-    // 3. Create the Footer
-    const todoFooter = document.createElement("div");
-    todoFooter.className = "todo-footer";
-
-    const dueDateSpan = document.createElement("span");
-    dueDateSpan.textContent = `Due: ${
-      todo.dueDate ? format(new Date(todo.dueDate), "MMM do, yyyy") : "No date"
-    }`;
-
-    const prioritySpan = document.createElement("span");
-    prioritySpan.className = `priority-badge ${todo.priority.toLowerCase()}`;
-    prioritySpan.textContent = todo.priority;
-
     // Icon buttons for edit and delete (accessible)
     const editBtn = document.createElement("button");
     editBtn.className = "icon-btn edit-btn";
@@ -157,7 +140,31 @@ const renderTodos = () => {
       Storage.save(projects, activeProject.id);
     });
 
-    todoFooter.append(dueDateSpan, prioritySpan, editBtn, deleteBtn);
+    const todoButtons = document.createElement("div");
+    todoButtons.className = "todo-buttons";
+    todoButtons.append(editBtn, deleteBtn);
+
+
+    // Assemble Text and Main (no description)
+    todoText.append(h3);
+    todoMain.append(checkbox, todoText,todoButtons);
+
+    // 3. Create the Footer
+    const todoFooter = document.createElement("div");
+    todoFooter.className = "todo-footer";
+
+    const dueDateSpan = document.createElement("span");
+    dueDateSpan.textContent = `Due: ${
+      todo.dueDate ? format(new Date(todo.dueDate), "MMM do, yyyy") : "No date"
+    }`;
+
+    const prioritySpan = document.createElement("span");
+    prioritySpan.className = `priority-badge ${todo.priority.toLowerCase()}`;
+    prioritySpan.textContent = todo.priority;
+
+    
+
+    todoFooter.append(dueDateSpan, prioritySpan);
 
     todoCard.append(todoMain, todoFooter);
     todoContainer.appendChild(todoCard);
