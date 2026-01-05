@@ -1,5 +1,6 @@
 import { Todo, Priority } from "./modules/Todo";
 import { Project } from "./modules/Project";
+import Storage from "./modules/Storage";
 import { format } from "date-fns";
 
 let editingTodo = null;
@@ -23,11 +24,21 @@ const closeProjectModalBtn = document.getElementById("close-project-modal");
 
 // --- 2. APP STATE ---
 
+// APP STATE: try to load from storage first
 let projects = [];
-const defaultProject = new Project("Inbox");
-projects.push(defaultProject);
-
-let activeProject = defaultProject;
+let activeProject = null;
+const saved = Storage.load();
+if (saved && Array.isArray(saved.projects) && saved.projects.length) {
+  projects = saved.projects;
+  activeProject =
+    projects.find((p) => p.id === saved.activeProjectId) || projects[0];
+} else {
+  const defaultProject = new Project("Inbox");
+  projects.push(defaultProject);
+  activeProject = defaultProject;
+  // persist initial state
+  Storage.save(projects, activeProject.id);
+}
 
 // --- 3. RENDER FUNCTIONS ---
 
@@ -46,6 +57,7 @@ const renderProjects = () => {
       activeProjectNameUI.textContent = project.name;
       renderProjects();
       renderTodos();
+      Storage.save(projects, activeProject.id);
     });
 
     projectListUI.appendChild(li);
@@ -83,6 +95,7 @@ const renderTodos = () => {
     checkbox.addEventListener("change", () => {
       todo.toggleComplete();
       renderTodos();
+      Storage.save(projects, activeProject.id);
     });
 
     const todoText = document.createElement("div");
@@ -136,6 +149,7 @@ const renderTodos = () => {
     deleteBtn.addEventListener("click", () => {
       activeProject.removeTodo(todo.id);
       renderTodos();
+      Storage.save(projects, activeProject.id);
     });
 
     todoFooter.append(dueDateSpan, prioritySpan, editBtn, deleteBtn);
@@ -174,6 +188,7 @@ todoForm.addEventListener("submit", (e) => {
   renderTodos();
   todoForm.reset();
   todoModal.classList.add("hidden");
+  Storage.save(projects, activeProject.id);
 });
 
 // Project Modal Listeners
@@ -193,9 +208,14 @@ projectForm.addEventListener("submit", (e) => {
   renderProjects();
   projectForm.reset();
   projectModal.classList.add("hidden");
+  Storage.save(projects, activeProject.id);
 });
 
 // --- 5. INITIALIZE APP ---
 
 renderProjects();
 renderTodos();
+
+// Ensure UI matches loaded state
+if (activeProject && activeProjectNameUI)
+  activeProjectNameUI.textContent = activeProject.name;
