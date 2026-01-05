@@ -40,6 +40,10 @@ if (saved && Array.isArray(saved.projects) && saved.projects.length) {
   Storage.save(projects, activeProject.id);
 }
 
+// Maximum allowed projects
+const MAX_PROJECTS = 10;
+
+
 // --- 3. RENDER FUNCTIONS ---
 
 // Update the Sidebar
@@ -62,6 +66,7 @@ const renderProjects = () => {
 
     projectListUI.appendChild(li);
   });
+
 };
 
 const openEditModal = (todo) => {
@@ -203,6 +208,7 @@ if (mainHeader) {
 
     // Persist change
     Storage.save(projects, activeProject.id);
+
   });
 
   // Append the button to the header (it will appear on the right due to flex: space-between)
@@ -251,6 +257,11 @@ closeProjectModalBtn.addEventListener("click", () =>
 
 projectForm.addEventListener("submit", (e) => {
   e.preventDefault();
+  if (projects.length >= MAX_PROJECTS) {
+    alert(`You can only have up to ${MAX_PROJECTS} projects.`);
+    return;
+  }
+
   const name = document.getElementById("project-name-input").value;
   const newProject = new Project(name);
   projects.push(newProject);
