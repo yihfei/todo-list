@@ -252,6 +252,33 @@ button:active {
     padding: 10px 20px;
     border-radius: 6px;
 }
+.icon-btn {
+    background: transparent;
+    border: none;
+    padding: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    color: #2f5bd8; /* default icon color */
+    transition: background 150ms ease, transform 120ms ease, color 150ms ease;
+}
+.icon-btn svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+.icon-btn:focus {
+    outline: 2px solid rgba(47,91,216,0.18);
+    outline-offset: 2px;
+}
+.icon-btn:hover {
+    background: rgba(47,91,216,0.06);
+    transform: translateY(-2px);
+}
+.edit-btn { color: #2f5bd8; }
+.delete-btn { color: #c62828; }
+.delete-btn:hover { background: rgba(198,40,40,0.06); }
 
 #add-task-btn {
     background: none;
