@@ -1,6 +1,6 @@
 # Todo List (Simple JS)
 
-A small, dependency-light client-side todo app built with plain JavaScript, CSS and HTML. Keeps data in localStorage and uses a tiny Project/Todo model structure in `src/modules`. Part of my personal effort to practice vanilla JS and localstorage.
+A small, dependency-light client-side todo app built with plain JavaScript, CSS and HTML. Keeps data in localStorage and uses a tiny Project/Todo model structure in `src/modules`. Part of my personal effort to practice vanilla JS and localStorage.
 
 ## Features
 
